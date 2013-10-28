@@ -252,8 +252,13 @@
     <xsl:text disable-output-escaping="yes">        "value": "</xsl:text>
     <xsl:value-of select="(@V)" />
     <xsl:text disable-output-escaping="yes">"
-           },
+           }
     </xsl:text>
+    <xsl:if test="position() != last()">
+      <xsl:text>
+        ,
+      </xsl:text>
+    </xsl:if>
   </xsl:template>
 
   <xsl:template match="HAS">
