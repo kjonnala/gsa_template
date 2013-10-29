@@ -250,7 +250,7 @@
     <xsl:text disable-output-escaping="yes">",
     </xsl:text>
     <xsl:text disable-output-escaping="yes">        "value": "</xsl:text>
-    <xsl:value-of select="(@V)" />
+    <xsl:call-template name="escapeQuote" />
     <xsl:text disable-output-escaping="yes">"
            }
     </xsl:text>
@@ -302,4 +302,22 @@
       <xsl:with-param name="replace" select="'&amp;#39;'" />
     </xsl:call-template>
   </xsl:template>
+  
+  <xsl:template name="escapeQuote">
+      <xsl:param name="pText" select="(@V)"/>
+
+      <xsl:if test="string-length($pText) >0">
+       <xsl:value-of select=
+        "substring-before(concat($pText, '&quot;'), '&quot;')"/>
+
+       <xsl:if test="contains($pText, '&quot;')">
+        <xsl:text>\"</xsl:text>
+
+        <xsl:call-template name="escapeQuote">
+          <xsl:with-param name="pText" select=
+          "substring-after($pText, '&quot;')"/>
+        </xsl:call-template>
+       </xsl:if>
+      </xsl:if>
+    </xsl:template>
 </xsl:stylesheet>
