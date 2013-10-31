@@ -64,6 +64,16 @@
         ],
       </xsl:text>
     </xsl:if>
+    
+    <xsl:if test="Synonyms">
+      <xsl:text disable-output-escaping="yes">
+        "synonyms": [
+      </xsl:text>
+      <xsl:apply-templates select="Synonyms"/>
+      <xsl:text>
+        ],
+      </xsl:text>
+    </xsl:if>
 
     <xsl:apply-templates select="RES" />
 
@@ -174,6 +184,17 @@
         ,
       </xsl:text>
     </xsl:if>
+  </xsl:template>
+  
+  <xsl:template match="Synonyms">
+    <xsl:for-each select="./*">
+      <xsl:text disable-output-escaping="yes">"</xsl:text>
+      <xsl:value-of select="." />
+      <xsl:text disable-output-escaping="yes">"</xsl:text>
+      <xsl:if test="position() != last()">
+        <xsl:text>,</xsl:text>
+      </xsl:if>
+    </xsl:for-each>
   </xsl:template>
 
   <xsl:template match="RES">
