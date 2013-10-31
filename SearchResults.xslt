@@ -74,6 +74,16 @@
         ],
       </xsl:text>
     </xsl:if>
+    
+    <xsl:if test="Spelling">
+      <xsl:text disable-output-escaping="yes">
+        "spelling": [
+      </xsl:text>
+      <xsl:apply-templates select="Spelling"/>
+      <xsl:text>
+        ],
+      </xsl:text>
+    </xsl:if>
 
     <xsl:apply-templates select="RES" />
 
@@ -187,6 +197,17 @@
   </xsl:template>
   
   <xsl:template match="Synonyms">
+    <xsl:for-each select="./*">
+      <xsl:text disable-output-escaping="yes">"</xsl:text>
+      <xsl:value-of select="." />
+      <xsl:text disable-output-escaping="yes">"</xsl:text>
+      <xsl:if test="position() != last()">
+        <xsl:text>,</xsl:text>
+      </xsl:if>
+    </xsl:for-each>
+  </xsl:template>
+  
+  <xsl:template match="Spelling">
     <xsl:for-each select="./*">
       <xsl:text disable-output-escaping="yes">"</xsl:text>
       <xsl:value-of select="." />
